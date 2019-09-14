@@ -1,0 +1,53 @@
+#######################
+#        every        #
+#######################
+
+# private/sensitve config, pki, etc.
+enclave/
+*.jks
+*.pem
+*.key
+*.pfx
+*.p12
+
+# data-related files
+*.csv
+*.dat
+*.txt
+*.tmp
+*.out
+
+# logs
+log/
+logs/
+*.log
+
+# a typical config might use these dirs.
+archive/
+inbox/
+out/
+data/
+cuttingfloor/
+cutting-floor/
+
+# vim
+*~
+*.swp
+*.swo
+
+# system files
+.DS_Store
+Thumbs.db
+thumbs.db
+Desktop.ini
+desktop.ini
+
+#########################################################
+#                       re-includes                     #  
+# specific to this repository (nih-pmi-data-dictionary) #
+#########################################################
+# .csv is excluded above;
+# re-include the two CSV files relevant to this repository.
+!NIHPrecisionMedicineInitiative_DataDictionary_with_SQL.csv
+!NIHPrecisionMedicineInitiative_DataDictionary.csv
+

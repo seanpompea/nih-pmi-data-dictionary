@@ -1,0 +1,67 @@
+Variable / Field Name,Form Name,Section Header,Field Type,Field Label,"Choices, Calculations, OR Slider Labels",Field Note,Text Validation Type OR Show Slider Number,Text Validation Min,Text Validation Max,Identifier?,Branching Logic (Show field only if...),Required Field?,Custom Alignment,Question Number (surveys only),Matrix Group Name,Matrix Ranking?,Field Annotation
+record_id,community_recruitment_survey,,text,Record ID,,,integer,,,,,,,,,,
+comm_last_name,community_recruitment_survey,,text,Last Name ,,,,,,,,,,,,,
+comm_first_name,community_recruitment_survey,,text,First Name ,,,,,,,,,,,,,
+comm_personal_email,community_recruitment_survey,,text,Personal Email Address ,,,email,,,,,,,,,,
+comm_dayphone,community_recruitment_survey,,text,Daytime Phone Number,,,,,,,,,,,,,
+time_of_day,community_recruitment_survey,,radio,Best Time of Day to Contact,"1, Morning (9am-12pm) | 2, Afternoon (1pm-5pm) | 3, Evening (6pm-8pm)",,,,,,,,,,,,
+mode_contact,community_recruitment_survey,,radio,Best Mode of Contact,"1, Email | 2, Phone | 3, Text",,,,,,,,,,,,
+comm_notes,community_recruitment_survey,,notes,Notes,,,,,,,,,,,,,
+mrn,recruitment,"For REDCap support, please contact <a href=""mailto:email-address-here"">email-address-here</a>.
+",text,MRN,,,,,,y,,y,,,,,
+name_last,recruitment,"If the Last Name, First Name, and Date of birth does not populate from EPIC, please manually enter in values ",text,Last Name,,Auto-populated with Epic data,,,,y,,y,,,,,
+name_first,recruitment,,text,First Name,,Auto-populated with Epic data,,,,y,,y,,,,,
+dob,recruitment,,text,Date of Birth,,Auto-populated with Epic data,date_mdy,,,y,,y,,,,,@HIDEBUTTON
+age,recruitment,,calc,Age,"if ((round(datediff([dob], ""today"", 'y', 'mdy'),4) - rounddown(datediff([dob], ""today"", 'y', 'mdy'), 0)) > .9989, roundup(datediff([dob], ""today"", 'y', 'mdy'), 0), rounddown(datediff([dob], ""today"", 'y', 'mdy'), 0))",As of the date this form was opened,,,,,,,,,,,
+sex,recruitment,,radio,Sex,"1, Male | 2, Female | 3, Intersex | 4, Unknown",Auto-populated with Epic data,,,,y,,,,,,,
+epic_phone,recruitment,,text,Phone Number,,Auto-populated with Epic data,,,,,,,,,,,
+epic_email,recruitment,,text,Email,,Auto-populated with Epic data,,,,,,,,,,,
+rsource,preenrollment_contact,"For REDCap support, please contact <a href=""mailto:email-address-here"">email-address-here</a>.
+",dropdown,Recruitment Source,"1, Epic Schedule | 2, Local Advertising | 3, Phone | 4, Referral | 5, In Person Clinic Visit | 6, Email | 7, National Advertisement | 8, Social Media | 9, Community Event | 10, Weill Cornell Website/Portal",,,,,,,y,,,,,
+re_coordinator,preenrollment_contact,,sql,Recruiting Coordinator ,"select record, value from redcap_data where project_id = 3053 and field_name = 'coordinator' order by value",,autocomplete,,,,,y,,,,,
+recruitment_site,preenrollment_contact,,dropdown,Attempted Recruitment Site,"1, Choice One | 2, Choice Two",,autocomplete,,,,,y,,,,,
+date_contact,preenrollment_contact,,text,Date of Contact ,,,date_mdy,,,,,y,,,,,
+schvdate,preenrollment_contact,,text,Scheduled Visit Date ,,,date_mdy,,,,,,,,,,
+method,preenrollment_contact,,radio,Primary Method of Contact,"1, Phone | 2, Email | 3, In Person",,,,,,,y,,,,,
+se_method,preenrollment_contact,,radio,Secondary Method of Contact,"1, Phone | 2, Email | 3, In Person",,,,,,,,,,,,
+required,preenrollment_contact,,radio,Is another contact required?,"1, Yes | 2, No",,,,,,,,,,,,
+contact,preenrollment_contact,,radio,Reason for Re-Contact,"1, Patient was unavailable | 2, Patient is interested but unsure | 3, Patient requested rescheduled call",,,,,,[required] = '1',,,,,,
+otherreason,preenrollment_contact,,notes,Other Reason for Contact,,,,,,,,,,,,,@HIDDEN
+contactbydate,preenrollment_contact,,text,Please Contact Participant by this Date:,,,date_mdy,,,,[required] = '1',,,,,,
+pavail,preenrollment_contact,,text,Participant Availability ,,,,,,,[required] = '1',,,,,,
+rptcontact,preenrollment_contact,,radio,Result for Participant Contact,"1, Enrolled | 2, Not interested",,,,,,[required] = '2',,,,,,
+contactnotes,preenrollment_contact,,notes,Contact Notes ,,,,,,,,,,,,,
+pmi_id_test,enrollment_verification,"For REDCap support, please contact <a href=""mailto:email-address-here"">email-address-here</a>.
+
+The values entered previously for the participant's first and last name from the Recruitment form are [name_first], [name_last]
+",text,PMI ID ,,Please copy from HealthPro. MRN from Epic is [mrn].,,,,,,y,,,,,
+pmi_dob,enrollment_verification,,text,Date of Birth,,Please copy from HealthPro. DOB from Epic is [dob].,date_mdy,,,,,y,,,,,@HIDEBUTTON
+enroll_date,enrollment_verification,,text,Date of Enrollment ,,,date_mdy,,,,,y,,,,,
+coordinator,enrollment_verification,,sql,Enrolling Research Coordinator ,"select record, value from redcap_data where project_id = 3053 and field_name = 'coordinator' order by value",,autocomplete,,,,,y,,,,,
+clinic_site,enrollment_verification,,dropdown,Enrollment Site ,"1, Choice One | 2, Choice Two",,autocomplete,,,,,y,,,,,
+saliva_kit,enrollment_verification,,yesno,Was a saliva kit used?,,,,,,,,,,,,,
+saliva_kit_rationale,enrollment_verification,,radio,Rationale for using a saliva kit,"1, Blood sample was unable to be obtained after 2 sticks | 2, Patient declined to give blood | 3, Patient has a history of adverse events during blood draws (seizures, loss of consciousness) | 4, Patient cannot give blood for religious/personal reasons",,,,,,[saliva_kit] = '1',,,,,,
+physician,enrollment_verification,,sql,Provider Champion,"select record, value from redcap_data where project_id = 3083 and field_name = 'provider' order by value",,autocomplete,,,,,,,,,,
+hp_notes,enrollment_verification,,notes,Notes,,,,,,,,,,,,,
+comp_coordinator,compensation,"For REDCap support, please contact <a href=""mailto:email-address-here"">email-address-here</a>.
+",sql,Compensation Coordinator,"select record, value from redcap_data where project_id = 3053 and field_name = 'coordinator' order by value",,autocomplete,,,,,y,,,,,
+comp_accept_refused,compensation,,radio,Compensation has been:,"1, Accepted | 2, Refused/Declined",,,,,,,y,,,,,
+p_accountnumber,compensation,,text,Card Number ,,Please enter X digit number on card,,,,,[comp_accept_refused] = '1',,,,,,
+compensation_date,compensation,,text,Compensation Accepted or Declined Date,,Date in which participant accepted or declined compensation ,date_mdy,,,,,y,,,,,
+comp_notes,compensation,,notes,Notes ,,,,,,,,,,,,,
+comp_signature,compensation_signature,,file,"I, [name_first] [name_last], have received payment in the amount of $25.00 (giftcard), for participation in the All of Us Research Program, on [compensation_date] at the New York Presbyterian Hospital-Weill Medical College of Cornell University.",,,signature,,,,,y,,,,,
+comp_date,compensation_signature,,text,Date,,,date_mdy,,,,,,,,,,@HIDDEN
+post_enroll_coordinator,postenrollment_contact_reminder,,sql,Post-Enrollment Coordinator,"select record, value from redcap_data where project_id = 3053 and field_name = 'coordinator' order by value",,autocomplete,,,,,,,,,,
+contactdatephy,postenrollment_contact_reminder,,text,Participant Contact Date ,,,date_dmy,,,,,,,,,,
+methodphy,postenrollment_contact_reminder,,radio,Method of Contact ,"1, Phone | 2, E-mail",,,,,,,,,,,,
+contactnotesphy,postenrollment_contact_reminder,,notes,Contact Notes ,,,,,,,,,,,,,
+needcallphy,postenrollment_contact_reminder,,radio,Is a reminder needed?,"1, Yes | 2, No",,,,,,,,,,,,
+fupphy,postenrollment_contact_reminder,,text,Date to follow up with patient ,,,date_dmy,,,,[needcallphy] = '1',,,,,,
+remindernotesphy,postenrollment_contact_reminder,,notes,Reminder Notes,,,,,,,[needcallphy] = '1',,,,,,
+admin_withdrawal,participant_withdrawal,"First Name: [name_first]
+Last Name: [name_last]
+MRN: [mrn]
+
+This should only be done by a system administrator. ",dropdown,Administrator withdrawing participant,"1, Choice One | 2, Choice Two",,,,,,,,,,,,
+withdrawal_date,participant_withdrawal,,text,Withdrawal date,,,date_mdy,,,,,,,,,,
+comment_withdrawal,participant_withdrawal,,notes,Comments,,,,,,,,,,,,,
